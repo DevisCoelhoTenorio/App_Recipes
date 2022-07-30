@@ -2,7 +2,7 @@ import React, { createContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
-const menuContext = createContext();
+export const MenuContext = createContext();
 
 function MenuProvider({ children }) {
   const [menuFood, setMenuFood] = useLocalStorage();
@@ -15,9 +15,9 @@ function MenuProvider({ children }) {
     setMenuDrink,
   }), []);
   return (
-    <menuContext.Provider value={valuerProvider}>
+    <MenuContext.Provider value={valuerProvider}>
       {children}
-    </menuContext.Provider>
+    </MenuContext.Provider>
   );
 }
 

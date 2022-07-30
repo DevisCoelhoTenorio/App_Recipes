@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
-export const contextUser = createContext();
+export const UserContext = createContext();
 
 function UserProvider({ children }) {
   const [userList, setUserList] = useLocalStorage('userList', []);
-  const [userLogged, setUserLogged] = useState('');
+  const [userLogged, setUserLogged] = useState(localStorage.getItem('userlogged') || '');
   const navigate = useNavigate();
 
   const auth = (email, password) => {
@@ -15,7 +15,7 @@ function UserProvider({ children }) {
     if (stateAuth) {
       localStorage.setItem('userlogged', email);
       setUserLogged(email);
-      return navigate('/');
+      return navigate('/foods');
     }
     return global.alert('Unregistered user');
   };
@@ -29,6 +29,7 @@ function UserProvider({ children }) {
       && name.length > CHARACTERS_MIN
       && password.length >= LENGTH_MIN_PASS) {
       setUserList([...userList, { name, email, password }]);
+      navigate('/');
     } else {
       global.alert('Incorrect fill format');
     }
@@ -43,9 +44,9 @@ function UserProvider({ children }) {
   }), []);
 
   return (
-    <contextUser.Provider value={valuerProvider}>
+    <UserContext.Provider value={valuerProvider}>
       {children}
-    </contextUser.Provider>
+    </UserContext.Provider>
   );
 }
 
