@@ -1,13 +1,16 @@
 import React from 'react';
 import './App.css';
-import UserProvider from './contexts/userContext';
+import AuthProvider from './contexts/AuthContext';
+import MainProvider from './contexts/MainContext';
 import MainRoutes from './routes';
 
 function App() {
   return (
-    <UserProvider>
-      <MainRoutes />
-    </UserProvider>
+    <MainProvider>
+      <AuthProvider>
+        <MainRoutes />
+      </AuthProvider>
+    </MainProvider>
   );
 }
 

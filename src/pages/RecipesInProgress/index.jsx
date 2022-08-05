@@ -1,9 +1,9 @@
 import React from 'react';
 
-function RecipesDetails() {
+function RecipesInProgress() {
   return (
-    <h1>RecipesDetails</h1>
+    <h1>RecipesInProgress</h1>
   );
 }
 
-export default RecipesDetails;
+export default RecipesInProgress;

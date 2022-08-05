@@ -1,39 +1,31 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import './Header.css';
-import Icon from '../IconInput';
-import profileInIcon from '../../images/userIn.svg';
-import profileLeaveIcon from '../../images/userLeave.svg';
-import searchWhiteIcon from '../../images/search-white.svg';
-import searchBlackIcon from '../../images/search-black.svg';
+import SearchBar from '../SearchBar';
+import ProfileIcon from '../ProfileIcon';
+import SearchIcon from '../SearchIcon';
 
-function Header({ namePag }) {
-  const onHeandleGoProfile = () => {
-    console.log('profile');
+function Header() {
+  const [searchVisible, setSearchVisible] = useState(false);
+  const { pathname } = useLocation();
+
+  const onHandleSetSearchVisible = () => {
+    setSearchVisible((prev) => !prev);
+    console.log(pathname);
   };
 
   return (
     <header className="header">
-      <Icon
-        alt="profile"
-        src2={profileInIcon}
-        src1={profileLeaveIcon}
-        onClick={onHeandleGoProfile}
-      />
-      <h1>{namePag}</h1>
-      <Icon
-        alt="search"
-        src1={searchWhiteIcon}
-        src2={searchBlackIcon}
-        onClick={onHeandleGoProfile}
-      />
-
+      <div className="header-option">
+        <ProfileIcon />
+        <h1>namePag</h1>
+        <SearchIcon
+          onClick={onHandleSetSearchVisible}
+        />
+      </div>
+      {searchVisible && <SearchBar />}
     </header>
   );
 }
 
 export default Header;
-
-Header.propTypes = {
-  namePag: PropTypes.string.isRequired,
-};
