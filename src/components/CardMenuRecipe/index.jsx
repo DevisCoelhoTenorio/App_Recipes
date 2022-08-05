@@ -1,9 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-function CardMenuRecipe() {
+function CardMenuRecipe({ name, img }) {
   return (
-    <h1>Teste</h1>
+    <div>
+      <p>{name}</p>
+      <img src={img} alt="foto da receita" />
+    </div>
   );
 }
 
 export default CardMenuRecipe;
+
+CardMenuRecipe.propTypes = {
+  name: PropTypes.string.isRequired,
+  img: PropTypes.string.isRequired,
+};
