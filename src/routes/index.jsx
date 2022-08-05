@@ -11,6 +11,7 @@ import FavoriteRecipes from '../pages/FavoriteRecipes';
 import Login from '../pages/Login';
 import Registration from '../pages/Registration';
 import Profile from '../pages/Profile';
+import NotFound from '../pages/NotFound';
 
 function PrivateRoute({ Component }) {
   return localStorage.getItem('userlogged') ? <Component /> : <Navigate to="/" />;
@@ -45,6 +46,7 @@ function MainRoutes() {
       <Route path="recipes/done-recipes" element={<PrivateRoute Component={DoneRecipes} />} />
       <Route path="recipes/favorite-recipes" element={<PrivateRoute Component={FavoriteRecipes} />} />
       <Route path="profile" element={<PrivateRoute Component={Profile} />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

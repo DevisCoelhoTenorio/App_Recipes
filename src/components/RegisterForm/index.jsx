@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Input from '../UI/Input';
 import Button from '../UI/Button';
-import { contextOfUser } from '../../hooks/useContext';
+import { useAuthContext } from '../../hooks/useContext';
 
 const INITIAL_STATE = {
   name: '',
@@ -11,7 +11,7 @@ const INITIAL_STATE = {
 
 function RegisterForm() {
   const [stateRegister, setStateRegister] = useState(INITIAL_STATE);
-  const { registerUser } = contextOfUser();
+  const { registerUser } = useAuthContext();
 
   const onHandleChange = ({ target: { value, name } }) => {
     setStateRegister((prev) => ({

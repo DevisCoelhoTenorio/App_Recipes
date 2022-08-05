@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
-export const UserContext = createContext();
+export const AuthContext = createContext();
 
-function UserProvider({ children }) {
+function AuthProvider({ children }) {
   const [userList, setUserList] = useLocalStorage('userList', []);
   const [userLogged, setUserLogged] = useState(localStorage.getItem('userlogged') || '');
   const navigate = useNavigate();
@@ -21,13 +21,13 @@ function UserProvider({ children }) {
   };
 
   const registerUser = ({ name, email, password }) => {
-    const REGEX_RULE = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/img;
-    const CHARACTERS_MIN = 3;
-    const LENGTH_MIN_PASS = 6;
+    const REGEX_RULE_EMAIL = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/img;
+    const REGEX_RULE_PASSWORD = /^[a-zA-Z0-9]{6,}$/;
+    const REGEX_RULE_NAME = /^[a-zA-Z0-9]{3,}$/;
     if (
-      REGEX_RULE.test(email)
-      && name.length > CHARACTERS_MIN
-      && password.length >= LENGTH_MIN_PASS) {
+      REGEX_RULE_EMAIL.test(email)
+      && REGEX_RULE_NAME.test(name)
+      && REGEX_RULE_PASSWORD.test(password)) {
       setUserList([...userList, { name, email, password }]);
       navigate('/');
     } else {
@@ -44,14 +44,14 @@ function UserProvider({ children }) {
   }), []);
 
   return (
-    <UserContext.Provider value={valuerProvider}>
+    <AuthContext.Provider value={valuerProvider}>
       {children}
-    </UserContext.Provider>
+    </AuthContext.Provider>
   );
 }
 
-export default UserProvider;
+export default AuthProvider;
 
-UserProvider.propTypes = {
+AuthProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };

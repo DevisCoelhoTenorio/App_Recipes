@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from '../UI/Input';
 import Button from '../UI/Button';
-import { contextOfUser } from '../../hooks/useContext';
+import { useAuthContext } from '../../hooks/useContext';
 
 const INITIAL_STATE = {
   email: '',
@@ -11,7 +11,7 @@ const INITIAL_STATE = {
 
 function LoginForm() {
   const [loginUser, setLoginUser] = useState(INITIAL_STATE);
-  const { auth } = contextOfUser();
+  const { auth } = useAuthContext();
   const navigate = useNavigate();
 
   const onHandleChange = ({ target: { name, value } }) => {

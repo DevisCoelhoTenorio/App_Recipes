@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import { UserContext } from '../contexts/userContext';
-import { MenuContext } from '../contexts/menuContext';
+import { AuthContext } from '../contexts/AuthContext';
+import { MainContext } from '../contexts/MainContext';
 
-export const contextOfUser = () => useContext(UserContext);
-export const contextOfMenu = () => useContext(MenuContext);
+export const useAuthContext = () => useContext(AuthContext);
+export const useMainContext = () => useContext(MainContext);
