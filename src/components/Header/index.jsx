@@ -1,24 +1,21 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import './Header.css';
 import SearchBar from '../SearchBar';
 import ProfileIcon from '../ProfileIcon';
 import SearchIcon from '../SearchIcon';
 
-function Header() {
+function Header({ namePag }) {
   const [searchVisible, setSearchVisible] = useState(false);
-  const { pathname } = useLocation();
-
   const onHandleSetSearchVisible = () => {
     setSearchVisible((prev) => !prev);
-    console.log(pathname);
   };
 
   return (
     <header className="header">
       <div className="header-option">
         <ProfileIcon />
-        <h1>namePag</h1>
+        <h1>{namePag}</h1>
         <SearchIcon
           onClick={onHandleSetSearchVisible}
         />
@@ -29,3 +26,7 @@ function Header() {
 }
 
 export default Header;
+
+Header.propTypes = {
+  namePag: PropTypes.string.isRequired,
+};

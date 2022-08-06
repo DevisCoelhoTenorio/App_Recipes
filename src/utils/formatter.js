@@ -1,5 +1,5 @@
 const formatterList = ({ list, size }) => {
-  let formattedList = list.slice(1, size);
+  let formattedList = list.length <= 12 ? list : list.slice(1, size);
   formattedList = formattedList.reduce((acc, curr) => [...acc, {
     id: curr.idMeal ? curr.idMeal : curr.idDrink,
     img: curr.strMealThumb ? curr.strMealThumb : curr.strDrinkThumb,

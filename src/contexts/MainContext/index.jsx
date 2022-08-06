@@ -1,37 +1,39 @@
-import React, { createContext, useMemo, useEffect } from 'react';
+import React, { createContext, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import useLocalStorage from '../../hooks/useLocalStorage';
 import fetchRequest from '../../services/fetchAPI';
 import formatterList from '../../utils/formatter';
 
 export const MainContext = createContext();
 
 function MainProvider({ children }) {
-  const [menuFood, setMenuFood] = useLocalStorage();
-  const [menuDrink, setMenuDrink] = useLocalStorage();
+  const [stateList, setStateList] = useState({ list: [], load: false });
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const foodRequestList = async () => {
-      let request;
-      request = await fetchRequest({ key: 'mainMenu', type: 'mea' });
-      request = formatterList({ list: request.meals, size: 13 });
-      setMenuFood(request);
-    };
-    const drinkRequestList = async () => {
-      let request = await fetchRequest({ key: 'mainMenu', type: 'cocktai' });
-      request = formatterList({ list: request.drinks, size: 13 });
-      setMenuDrink(request);
-    };
-    foodRequestList();
-    drinkRequestList();
-  }, []);
+  const menuRequest = async ({
+    key, type, list, size, filter,
+  }) => {
+    setStateList({
+      list: [],
+      load: true,
+    });
+    let request;
+    request = await fetchRequest({ key, type, filter });
+    request = formatterList({ list: request[list], size });
+    if (request.length === 1) {
+      const page = type === 'mea' ? 'foods' : 'drinks';
+      return navigate(`/${page}/${request[0].id}`);
+    }
+    return setStateList({
+      list: request,
+      load: false,
+    });
+  };
 
   const valuerProvider = useMemo(() => ({
-    menuFood,
-    setMenuFood,
-    menuDrink,
-    setMenuDrink,
-  }), []);
+    stateList,
+    menuRequest,
+  }), [stateList]);
   return (
     <MainContext.Provider value={valuerProvider}>
       {children}
